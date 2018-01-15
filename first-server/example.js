@@ -1,14 +1,19 @@
-const http = require('http');
-
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
+var http = require('http');
+var fs = require("fs");
+ 
+const server = http.createServer(function(request, response) {
+	fs.readFile("index.html", function(err, data){
+		response.writeHead(200, {'Content-Type' : 'text/html'});
+		response.write(data);
+		response.end();
+	});
+}).listen(port);
 
+
+//Templating example `${variable name}`
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
